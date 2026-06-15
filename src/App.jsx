@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Marketplace from "./pages/Marketplace";
 import Suppliers from "./pages/Suppliers";
+import SignUp from "./pages/SignUp";
+import Payment from "./pages/Payment";
 
 // --- DATA ---
 export const PRODUCTS = [
@@ -34,7 +36,7 @@ const useRouter = (initialPage = "home") => {
       setPage(newPage);
       window.scrollTo(0, 0);
       setIsAnimating(false);
-    }, 300); // Match CSS transition duration
+    }, 300);
   };
 
   return { page, navigate, isAnimating };
@@ -43,6 +45,13 @@ const useRouter = (initialPage = "home") => {
 export default function App() {
   const { page, navigate, isAnimating } = useRouter("home");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [orderProduct, setOrderProduct] = useState(null);
+
+  // Helper to start the order process
+  const startOrder = (product) => {
+    setOrderProduct(product);
+    navigate("signup");
+  };
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -57,8 +66,10 @@ export default function App() {
       
       <div className={`page-wrapper ${isAnimating ? 'fade-out' : 'fade-in'}`}>
         {page === "home" && <Home navigate={navigate} />}
-        {page === "marketplace" && <Marketplace />}
+        {page === "marketplace" && <Marketplace startOrder={startOrder} />}
         {page === "suppliers" && <Suppliers />}
+        {page === "signup" && <SignUp navigate={navigate} product={orderProduct} />}
+        {page === "payment" && <Payment navigate={navigate} product={orderProduct} />}
       </div>
       
       <Footer navigate={navigate} />
@@ -66,7 +77,7 @@ export default function App() {
   );
 }
 
-// --- GLOBAL CSS & ANIMATIONS ---
+// --- GLOBAL CSS ---
 const globalCss = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap');
   
@@ -77,27 +88,15 @@ const globalCss = `
   img { max-width: 100%; display: block; }
   
   /* Animations */
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes slideInLeft {
-    from { opacity: 0; transform: translateX(-50px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-  }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
   .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
   .reveal.active { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
 
   /* Page Transitions */
   .page-wrapper { transition: opacity 0.3s ease, transform 0.3s ease; }
@@ -122,8 +121,7 @@ const globalCss = `
   .btn-outline { background: transparent; border: 2px solid rgba(0,0,0,0.1); padding: 14px 32px; font-weight: 600; border-radius: 12px; cursor: pointer; background: white; }
   
   .tag { display: inline-block; background: white; padding: 8px 16px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-  .tag-light { background: rgba(0,0,0,0.05); color: #0D1B0F; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; display: inline-block; padding: 8px 16px; border-radius: 4px; }
-
+  
   /* Product Grid */
   .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
   .product-card { background: white; border-radius: 20px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
@@ -137,6 +135,16 @@ const globalCss = `
   .card-meta { margin-top: 12px; font-size: 0.9rem; color: rgba(0,0,0,0.5); display: flex; align-items: center; gap: 6px; }
   
   .icon { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+
+  /* Modal Fixes - Centered, no scroll on body */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; animation: fadeInUp 0.3s ease; }
+  .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 24px; overflow: hidden; position: relative; max-height: 90vh; overflow-y: auto; animation: scaleIn 0.3s ease; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+  .modal-image { height: 250px; background-size: cover; background-position: center; }
+  .modal-body { padding: 32px; }
+  .modal-body .price { font-size: 1.5rem; font-weight: 800; margin: 16px 0; }
+  .close-btn { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: white; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .btn-full { width: 100%; background: #0D1B0F; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 24px; font-size: 1rem; transition: background 0.2s; }
+  .btn-full:hover { background: #4CAF50; }
 
   @media (max-width: 768px) {
     h1 { font-size: 2.5rem; }
