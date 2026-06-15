@@ -509,7 +509,7 @@ export default function Home({ navigate }) {
         `}</style>
       </section>
 
-      {/* SECTION 3: MISSION & VISION */}
+     {/* SECTION 3: MISSION & VISION - FIXED VISIBILITY */}
       <section className="mission-section">
         <div className="container">
           <div className="mv-grid">
@@ -526,17 +526,40 @@ export default function Home({ navigate }) {
           </div>
         </div>
         <style jsx>{`
-          .mission-section { padding: 100px 0; background: #F5F0E8; }
+          .mission-section { padding: 100px 24px; background: #F5F0E8; }
           .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-          .mv-card { background: white; padding: 48px; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05); transition: transform 0.3s ease; }
+          
+          .mv-card { 
+            background: white; 
+            padding: 48px; 
+            border-radius: 24px; 
+            border: 1px solid rgba(0,0,0,0.05); 
+            transition: transform 0.3s ease; 
+          }
           .mv-card:hover { transform: translateY(-10px); }
-          .mv-card.highlight { background: #0D1B0F; color: white; }
-          .mv-card.highlight p { color: rgba(255,255,255,0.8); }
-          .mv-icon { margin-bottom: 24px; background: rgba(76,175,80,0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+          
+          /* Fix: Explicitly set text color and higher opacity */
+          .mv-card h3 { color: #0D1B0F; font-size: 1.8rem; margin-bottom: 16px; }
+          .mv-card p { color: #374151; font-size: 1.1rem; line-height: 1.7; opacity: 1; }
+
+          /* Highlight Card (Dark Mode) */
+          .mv-card.highlight { background: #0D1B0F; }
+          .mv-card.highlight h3 { color: #fff; }
+          .mv-card.highlight p { color: rgba(255,255,255,0.9); } /* Higher opacity */
+          
+          .mv-icon { 
+            margin-bottom: 24px; 
+            background: rgba(76,175,80,0.1); 
+            width: 70px; height: 70px; 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+          }
           .mv-card.highlight .mv-icon { background: rgba(255,255,255,0.1); }
-          h3 { font-size: 1.8rem; margin-bottom: 16px; }
-          p { font-size: 1.1rem; line-height: 1.7; opacity: 0.8; }
-          @media (max-width: 768px) { .mv-grid { grid-template-columns: 1fr; } }
+          
+          @media (max-width: 768px) { 
+            .mv-grid { grid-template-columns: 1fr; } 
+            .mv-card { padding: 32px; }
+          }
         `}</style>
       </section>
 

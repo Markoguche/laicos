@@ -98,7 +98,7 @@ export default function Marketplace({ startOrder }) {
         `}</style>
       </section>
 
-      {/* MODAL - UPDATED FOR BETTER MOBILE VIEW */}
+      {/* MODAL - COMPACT MOBILE VIEW */}
       {active && (
         <div className="modal-overlay" onClick={() => setActive(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -106,10 +106,10 @@ export default function Marketplace({ startOrder }) {
             <div className="modal-image" style={{ backgroundImage: `url(${active.img})` }} />
             <div className="modal-body">
               <span className="tag">{active.category}</span>
-              <h2 style={{fontSize: '1.5rem', marginBottom: '8px'}}>{active.name}</h2>
+              <h2 className="modal-title">{active.name}</h2>
               <div className="price">{active.price} <span>/ {active.unit}</span></div>
               <p className="desc">{active.desc}</p>
-              <div className="location" style={{marginBottom: '16px', fontSize: '0.9rem', color: '#666'}}>
+              <div className="location">
                 <Icon name="mapPin" style={{width: 14, height: 14, stroke: '#999', verticalAlign: 'middle', marginRight: '4px'}} />
                 {active.location}
               </div>
@@ -123,27 +123,51 @@ export default function Marketplace({ startOrder }) {
       )}
       
       <style jsx global>{`
-        /* Modal Responsive Fixes */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 16px; }
-        .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 24px; overflow: hidden; position: relative; max-height: 90vh; display: flex; flex-direction: column; }
+        /* Modal Layout */
+        .modal-overlay { 
+          position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); 
+          z-index: 200; display: flex; align-items: center; justify-content: center; padding: 16px; 
+        }
+        .modal-content { 
+          background: white; width: 100%; max-width: 450px; border-radius: 20px; 
+          overflow: hidden; position: relative; max-height: 85vh; display: flex; flex-direction: column; 
+          box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
         
-        /* Reduce image size on mobile to see content immediately */
-        .modal-image { height: 200px; width: 100%; background-size: cover; background-position: center; flex-shrink: 0; }
+        .modal-image { 
+          height: 180px; width: 100%; background-size: cover; background-position: center; flex-shrink: 0; 
+        }
         
-        .modal-body { padding: 24px; overflow-y: auto; }
-        .modal-body .price { font-size: 1.3rem; font-weight: 800; margin: 8px 0; color: #0D1B0F; }
-        .modal-body .desc { font-size: 0.95rem; line-height: 1.5; color: #555; margin-bottom: 16px; }
+        .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
         
-        .close-btn { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.5); color: white; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; z-index: 10; backdrop-filter: blur(4px); }
+        .modal-title { font-size: 1.4rem; margin: 8px 0; font-family: 'Space Grotesk', sans-serif; }
+        .modal-body .price { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; color: #0D1B0F; }
+        .modal-body .desc { font-size: 0.9rem; line-height: 1.5; color: #555; margin-bottom: 12px; }
+        .location { margin-bottom: 16px; font-size: 0.85rem; color: #666; }
         
-        .btn-full { width: 100%; background: #4CAF50; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 1rem; transition: background 0.2s; }
-        .btn-full:hover { background: #0D1B0F; }
+        .close-btn { 
+          position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; 
+          border-radius: 50%; background: rgba(0,0,0,0.4); color: white; border: none; 
+          cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; 
+          z-index: 10; backdrop-filter: blur(4px); 
+        }
+        
+        .btn-full { 
+          width: 100%; background: #4CAF50; color: white; border: none; padding: 14px; 
+          border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 1rem; 
+          transition: background 0.2s, transform 0.1s; 
+        }
+        .btn-full:active { transform: scale(0.98); }
 
-        /* Mobile Specifics */
+        /* Mobile Specifics - Very Compact */
         @media (max-width: 600px) {
-          .modal-content { max-height: 85vh; border-radius: 16px; }
-          .modal-image { height: 160px; } /* Smaller image on mobile */
-          .modal-body { padding: 20px; }
+          .modal-content { max-height: 90vh; border-radius: 16px; }
+          .modal-image { height: 120px; } /* Smaller image */
+          .modal-body { padding: 16px; }
+          .modal-title { font-size: 1.2rem; margin: 4px 0; }
+          .modal-body .price { font-size: 1.1rem; margin-bottom: 8px; }
+          .modal-body .desc { font-size: 0.85rem; margin-bottom: 8px; line-height: 1.4; }
+          .location { margin-bottom: 12px; }
         }
       `}</style>
     </main>
