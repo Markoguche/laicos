@@ -9,165 +9,178 @@ export default function Marketplace({ startOrder }) {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('active');
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   }, [filter, searchQuery]);
 
   const categories = ["All", ...new Set(PRODUCTS.map(p => p.category))];
-  
   const filteredProducts = PRODUCTS.filter(p => {
     const matchesCategory = filter === "All" || p.category === filter;
-    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          p.location.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
   return (
-    <main>
-      {/* SECTION 1: HERO */}
-      <section className="market-hero">
-        <div className="container">
-          <h1 className="reveal">Discover Products</h1>
-          <p className="reveal reveal-delay-1">Browse verified listings from across the nation.</p>
-          <div className="search-bar reveal reveal-delay-2">
-            <Icon name="search" style={{width: 20, height: 20, stroke: '#666'}} />
-            <input 
-              placeholder="Search for product or location..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button className="btn-primary">Search</button>
+    <main style={{paddingTop: '100px'}}>
+      {/* HERO */}
+      <section className="container" style={{marginBottom: '60px'}}>
+        <div className="reveal" style={{textAlign: 'center', marginBottom: '40px'}}>
+          <h1 style={{fontSize: '4rem'}}>The Marketplace</h1>
+          <p style={{color: 'var(--text-secondary)', marginTop: '16px'}}>Verified produce. Instant access.</p>
+        </div>
+
+        <div className="search-controls reveal">
+          <div className="search-input-wrap">
+            <Icon name="search" style={{width: 20, height: 20, stroke: '#555'}} />
+            <input placeholder="Search commodities..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+          </div>
+          <div className="filter-pills">
+            {categories.map((cat) => (
+              <button 
+                key={cat} 
+                onClick={() => setFilter(cat)} 
+                className={filter === cat ? "active-pill" : "pill-inactive"}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
+        
         <style jsx>{`
-          .market-hero { min-height: 50vh; background: white; padding: 120px 0 60px; display: flex; align-items: center; }
-          .search-bar { display: flex; align-items: center; gap: 12px; background: #F5F0E8; padding: 8px 16px; border-radius: 12px; max-width: 600px; margin-top: 24px; }
-          input { flex: 1; background: transparent; border: none; font-size: 1rem; padding: 8px 0; outline: none; }
-          @media (max-width: 600px) { .btn-primary { display: none; } }
+          .search-controls { display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
+          .search-input-wrap { display: flex; align-items: center; gap: 12px; background: #111; padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border-color); flex: 1; max-width: 400px; }
+          input { background: transparent; border: none; font-size: 1rem; color: #fff; outline: none; width: 100%; }
+          .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+          
+          .pill-inactive { 
+            background: transparent; 
+            border: 1px solid var(--border-color); 
+            padding: 8px 20px; 
+            border-radius: 20px; 
+            color: #ffffff;
+            cursor: pointer; 
+            transition: all 0.2s; 
+            font-size: 0.9rem; 
+          }
+          .pill-inactive:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+          
+          .active-pill { 
+            background: var(--accent-blue); 
+            color: #fff; 
+            border: 1px solid var(--accent-blue);
+            padding: 8px 20px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            font-size: 0.9rem; 
+            font-weight: 600;
+          }
         `}</style>
       </section>
 
-      {/* SECTION 2: GRID */}
-      <section className="product-grid-section">
-        <div className="container">
-          <div className="grid-header">
-            <h3 className="reveal">Live Listings</h3>
-            <div className="filters reveal">
-              {categories.map((cat) => (
-                <button key={cat} onClick={() => setFilter(cat)} className={filter === cat ? "active" : ""}>
-                  {cat}
-                </button>
-              ))}
+      {/* GRID */}
+      <section className="container">
+        <div className="product-grid-2026">
+          {filteredProducts.map((p, i) => (
+            <div key={p.id} className="product-card reveal" style={{transitionDelay: `${i * 0.05}s`}} onClick={() => setActive(p)}>
+              <div className="card-image" style={{ backgroundImage: `url(${p.img})`, height: '250px' }} />
+              <div style={{padding: '30px'}}>
+                <span style={{color: 'var(--accent-blue)', fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase'}}>{p.category}</span>
+                <h4 style={{marginTop: '8px'}}>{p.name}</h4>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px'}}>
+                  <span style={{fontSize: '1.1rem', fontWeight: 700}}>{p.price}</span>
+                  <span style={{color: 'var(--accent-lemon)', fontSize: '0.8rem'}}>View Details →</span>
+                </div>
+              </div>
             </div>
-          </div>
-          
-          {filteredProducts.length === 0 ? (
-            <div style={{textAlign: 'center', padding: '40px'}}>No products found matching your criteria.</div>
-          ) : (
-            <div className="product-grid">
-              {filteredProducts.map((p, i) => (
-                <div key={p.id} className="product-card reveal" style={{transitionDelay: `${i * 0.05}s`}} onClick={() => setActive(p)}>
-                  <div className="card-image-wrap">
-                    <div className="card-image" style={{ backgroundImage: `url(${p.img})` }} />
+          ))}
+        </div>
+        <style jsx>{`
+          .product-grid-2026 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        `}</style>
+      </section>
+
+      {/* DRAWER (Product Detail) - FIXED HEIGHT */}
+      <div className={`drawer-overlay ${active ? 'open' : ''}`} onClick={() => setActive(null)}>
+        <div className="drawer-content" onClick={(e) => e.stopPropagation()}>
+          {active && (
+            <>
+              <div className="drawer-scroll-area">
+                <div className="drawer-header" style={{backgroundImage: `url(${active.img})`}}>
+                  <button className="close-icon" onClick={() => setActive(null)}>✕</button>
+                </div>
+                
+                <div className="drawer-body">
+                  <span style={{color: 'var(--accent-blue)', fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase'}}>{active.category}</span>
+                  <h2 style={{marginTop: '16px', fontSize: '2.5rem'}}>{active.name}</h2>
+                  
+                  <div style={{margin: '24px 0', padding: '20px', background: 'rgba(255,255,255,0.03)', borderRadius: '16px'}}>
+                    <span style={{display: 'block', color: 'var(--text-secondary)', fontSize: '0.8rem'}}>Price per unit</span>
+                    <span style={{fontSize: '2rem', fontWeight: 700, color: 'var(--accent-lemon)'}}>{active.price}</span>
                   </div>
-                  <div className="card-body">
-                    <span className="card-category">{p.category}</span>
-                    <h4>{p.name}</h4>
-                    <div className="card-price">{p.price} <span>per {p.unit}</span></div>
-                    <div className="card-meta">
-                      <Icon name="mapPin" style={{width: 14, height: 14, stroke: '#999'}} />
-                      <span>{p.location}</span>
-                    </div>
+
+                  <p style={{color: 'var(--text-secondary)', lineHeight: 1.8}}>{active.desc}</p>
+                  
+                  <div style={{marginTop: '24px', display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-secondary)'}}>
+                    <Icon name="mapPin" style={{width:16, height:16}} /> {active.location}
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+
+              <div className="drawer-footer">
+                  <button className="btn-primary" style={{width: '100%', justifyContent: 'center'}} onClick={() => startOrder(active)}>
+                    Initiate Order
+                  </button>
+              </div>
+            </>
           )}
         </div>
-        <style jsx>{`
-          .product-grid-section { min-height: 100vh; padding: 60px 0; background: #F5F0E8; }
-          .grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 20px; flex-wrap: wrap; gap: 16px; }
-          .filters button { background: none; border: none; padding: 8px 16px; cursor: pointer; font-weight: 600; color: rgba(0,0,0,0.4); transition: all 0.2s; }
-          .filters button.active { color: #0D1B0F; border-bottom: 2px solid #4CAF50; }
-          .card-image-wrap { overflow: hidden; }
-          
-          @media (max-width: 600px) { .filters { width: 100%; overflow-x: auto; white-space: nowrap; padding-bottom: 8px; } }
-        `}</style>
-      </section>
-
-      {/* MODAL - COMPACT MOBILE VIEW */}
-      {active && (
-        <div className="modal-overlay" onClick={() => setActive(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={() => setActive(null)}>×</button>
-            <div className="modal-image" style={{ backgroundImage: `url(${active.img})` }} />
-            <div className="modal-body">
-              <span className="tag">{active.category}</span>
-              <h2 className="modal-title">{active.name}</h2>
-              <div className="price">{active.price} <span>/ {active.unit}</span></div>
-              <p className="desc">{active.desc}</p>
-              <div className="location">
-                <Icon name="mapPin" style={{width: 14, height: 14, stroke: '#999', verticalAlign: 'middle', marginRight: '4px'}} />
-                {active.location}
-              </div>
-              
-              <button className="btn-full" onClick={() => startOrder(active)}>
-                Initiate Order
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
       
-      <style jsx global>{`
-        /* Modal Layout */
-        .modal-overlay { 
-          position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); 
-          z-index: 200; display: flex; align-items: center; justify-content: center; padding: 16px; 
-        }
-        .modal-content { 
-          background: white; width: 100%; max-width: 450px; border-radius: 20px; 
-          overflow: hidden; position: relative; max-height: 85vh; display: flex; flex-direction: column; 
-          box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
+      <style jsx>{`
+        .drawer-scroll-area { flex: 1; overflow-y: auto; }
         
-        .modal-image { 
-          height: 180px; width: 100%; background-size: cover; background-position: center; flex-shrink: 0; 
+        /* FIX: Reduced Height to 200px */
+        .drawer-header { 
+          height: 200px; 
+          width: 100%; 
+          background-size: cover; 
+          background-position: center; 
+          position: relative; 
+          flex-shrink: 0;
         }
         
-        .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
-        
-        .modal-title { font-size: 1.4rem; margin: 8px 0; font-family: 'Space Grotesk', sans-serif; }
-        .modal-body .price { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; color: #0D1B0F; }
-        .modal-body .desc { font-size: 0.9rem; line-height: 1.5; color: #555; margin-bottom: 12px; }
-        .location { margin-bottom: 16px; font-size: 0.85rem; color: #666; }
-        
-        .close-btn { 
-          position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; 
-          border-radius: 50%; background: rgba(0,0,0,0.4); color: white; border: none; 
-          cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; 
-          z-index: 10; backdrop-filter: blur(4px); 
+        .close-icon { 
+          position: absolute; 
+          top: 20px; 
+          right: 20px; 
+          background: rgba(0,0,0,0.6); 
+          border: 1px solid rgba(255,255,255,0.1); 
+          color: white; 
+          width: 40px; 
+          height: 40px; 
+          border-radius: 50%; 
+          cursor: pointer; 
+          z-index: 300; 
         }
         
-        .btn-full { 
-          width: 100%; background: #4CAF50; color: white; border: none; padding: 14px; 
-          border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 1rem; 
-          transition: background 0.2s, transform 0.1s; 
+        .drawer-body { padding: 40px; }
+        
+        .drawer-footer { 
+          padding: 20px 40px; 
+          background: rgba(15, 15, 15, 0.9); 
+          backdrop-filter: blur(10px); 
+          border-top: 1px solid var(--border-color); 
+          flex-shrink: 0; 
         }
-        .btn-full:active { transform: scale(0.98); }
 
-        /* Mobile Specifics - Very Compact */
+        /* Mobile Optimization */
         @media (max-width: 600px) {
-          .modal-content { max-height: 90vh; border-radius: 16px; }
-          .modal-image { height: 120px; } /* Smaller image */
-          .modal-body { padding: 16px; }
-          .modal-title { font-size: 1.2rem; margin: 4px 0; }
-          .modal-body .price { font-size: 1.1rem; margin-bottom: 8px; }
-          .modal-body .desc { font-size: 0.85rem; margin-bottom: 8px; line-height: 1.4; }
-          .location { margin-bottom: 12px; }
+          .drawer-header { height: 160px; } /* Even smaller on mobile */
+          .drawer-body { padding: 24px; }
+          .drawer-footer { padding: 16px 24px; }
+          h2 { font-size: 1.8rem; }
         }
       `}</style>
     </main>

@@ -1,3 +1,4 @@
+import React from 'react';
 
 export default function Footer({ navigate }) {
   return (
@@ -23,15 +24,20 @@ export default function Footer({ navigate }) {
       <div className="footer-bottom">© 2026 Laicos Technologies. All Rights Reserved.</div>
       
       <style jsx>{`
-        .main-footer { background: #0D1B0F; color: rgba(255,255,255,0.7); padding: 64px 24px 32px; }
+        .main-footer { 
+          background: #050510; /* Deep Blue/Black */
+          color: rgba(255,255,255,0.6); 
+          padding: 80px 24px 32px; 
+          border-top: 1px solid rgba(37, 99, 235, 0.1);
+        }
         .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 48px; }
         .footer-brand h3 { color: white; font-size: 1.5rem; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif; }
-        .logo-icon { color: #4CAF50; }
-        .footer-grid h4 { color: white; font-size: 1rem; margin-bottom: 16px; }
+        .logo-icon { color: var(--accent-lemon); /* Lemon Accent */ }
+        .footer-grid h4 { color: white; font-size: 1rem; margin-bottom: 20px; font-weight: 600; }
         .footer-grid ul { list-style: none; }
-        .footer-grid ul li { margin-bottom: 8px; cursor: pointer; transition: color 0.2s; }
-        .footer-grid ul li:hover { color: white; }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 48px; padding-top: 24px; text-align: center; font-size: 0.85rem; max-width: 1280px; margin-left: auto; margin-right: auto; }
+        .footer-grid ul li { margin-bottom: 12px; cursor: pointer; transition: color 0.2s; font-size: 0.95rem; }
+        .footer-grid ul li:hover { color: var(--accent-lemon); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 64px; padding-top: 32px; text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.4); }
         @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
       `}</style>
     </footer>

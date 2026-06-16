@@ -59,8 +59,8 @@ export default function Suppliers() {
           .form-group { margin-bottom: 20px; }
           .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
           .form-group input, .form-group select { width: 100%; padding: 12px 16px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-size: 1rem; outline: none; transition: border-color 0.3s; }
-          .form-group input:focus { border-color: #4CAF50; }
-          .btn-full { width: 100%; background: #4CAF50; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 1rem; transition: background 0.3s; }
+          .form-group input:focus { border-color: #181a92; }
+          .btn-full { width: 100%; background: #241d86; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 1rem; transition: background 0.3s; }
           .btn-full:hover { background: #0D1B0F; }
         `}</style>
       </section>

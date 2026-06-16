@@ -29,16 +29,14 @@ export const PRODUCTS = [
 const useRouter = (initialPage = "home") => {
   const [page, setPage] = useState(initialPage);
   const [isAnimating, setIsAnimating] = useState(false);
-
   const navigate = (newPage) => {
     setIsAnimating(true);
     setTimeout(() => {
       setPage(newPage);
       window.scrollTo(0, 0);
       setIsAnimating(false);
-    }, 300);
+    }, 400);
   };
-
   return { page, navigate, isAnimating };
 };
 
@@ -47,7 +45,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [orderProduct, setOrderProduct] = useState(null);
 
-  // Helper to start the order process
   const startOrder = (product) => {
     setOrderProduct(product);
     navigate("signup");
@@ -77,78 +74,90 @@ export default function App() {
   );
 }
 
-// --- GLOBAL CSS ---
+// --- GLOBAL CSS (Blue & Lemon Theme) ---
 const globalCss = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap');
   
+  :root {
+    --bg-primary: #050505;
+    --bg-secondary: #0F1115;
+    --bg-surface: #161B22;
+    --accent-blue: #2563EB; /* Primary Blue */
+    --accent-lemon: #DFFF00; /* Secondary Lemon */
+    --text-primary: #F0F0F0;
+    --text-secondary: #8B949E;
+    --border-color: rgba(255,255,255,0.08);
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: #F5F0E8; color: #0D1B0F; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-  .app-container { min-height: 100vh; display: flex; flex-direction: column; }
-  main { flex: 1; }
+  body { 
+    font-family: 'Inter', sans-serif; 
+    background: var(--bg-primary); 
+    color: var(--text-primary); 
+    line-height: 1.5; 
+    -webkit-font-smoothing: antialiased; 
+    overflow-x: hidden;
+  }
+  
+  .app-container { min-height: 100vh; display: flex; flex-direction: column; position: relative; }
+  main { flex: 1; position: relative; z-index: 1; }
   img { max-width: 100%; display: block; }
   
   /* Animations */
-  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
-  @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+  
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
   .reveal.active { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
 
-  /* Page Transitions */
-  .page-wrapper { transition: opacity 0.3s ease, transform 0.3s ease; }
+  .page-wrapper { transition: opacity 0.4s ease, transform 0.4s ease; }
   .fade-in { opacity: 1; transform: translateY(0); }
-  .fade-out { opacity: 0; transform: translateY(10px); }
+  .fade-out { opacity: 0; transform: translateY(20px); }
 
   /* Layout Utilities */
-  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-  .text-center { text-align: center; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
   
-  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
-  h1 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 24px; }
-  h2 { font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 32px; }
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.03em; line-height: 0.95; }
+  h1 { font-size: clamp(3.5rem, 10vw, 7rem); margin-bottom: 24px; }
+  h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
   
   .btn-primary {
-    background: #4CAF50; color: white; border: none; padding: 16px 32px;
-    font-weight: 600; border-radius: 12px; cursor: pointer; font-size: 1rem;
+    background: var(--accent-blue); color: #fff; border: none; padding: 18px 36px;
+    font-weight: 700; border-radius: 50px; cursor: pointer; font-size: 0.9rem;
     transition: transform 0.2s, box-shadow 0.2s; display: inline-flex; align-items: center; gap: 8px;
+    text-transform: uppercase; letter-spacing: 1px;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(76, 175, 80, 0.2); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(37, 99, 235, 0.4); }
   
-  .btn-outline { background: transparent; border: 2px solid rgba(0,0,0,0.1); padding: 14px 32px; font-weight: 600; border-radius: 12px; cursor: pointer; background: white; }
-  
-  .tag { display: inline-block; background: white; padding: 8px 16px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-  
-  /* Product Grid */
-  .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-  .product-card { background: white; border-radius: 20px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
-  .product-card:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-  .card-image { height: 200px; background-size: cover; background-position: center; transition: transform 0.5s ease; }
-  .product-card:hover .card-image { transform: scale(1.05); }
-  .card-body { padding: 24px; position: relative; overflow: hidden; }
-  .card-category { font-size: 0.8rem; font-weight: 600; color: #4CAF50; text-transform: uppercase; letter-spacing: 1px; }
-  .card-price { font-size: 1.2rem; font-weight: 800; margin-top: 8px; }
-  .card-price span { font-size: 0.9rem; font-weight: 400; color: rgba(0,0,0,0.5); }
-  .card-meta { margin-top: 12px; font-size: 0.9rem; color: rgba(0,0,0,0.5); display: flex; align-items: center; gap: 6px; }
+  .btn-ghost { background: transparent; border: 1px solid var(--border-color); padding: 18px 36px; font-weight: 600; border-radius: 50px; cursor: pointer; color: var(--text-primary); transition: all 0.3s; }
+  .btn-ghost:hover { background: rgba(255,255,255,0.05); border-color: var(--text-primary); }
+
+  /* Card System - Increased Padding */
+  .product-card { 
+    background: var(--bg-surface); border-radius: 24px; overflow: hidden; cursor: pointer; 
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+    border: 1px solid var(--border-color);
+  }
+  .product-card:hover { transform: translateY(-10px); border-color: rgba(255,255,255,0.2); }
+  .card-image { height: 300px; background-size: cover; background-position: center; transition: transform 0.6s ease; filter: brightness(0.9); }
+  .product-card:hover .card-image { transform: scale(1.05); filter: brightness(1); }
   
   .icon { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
 
-  /* Modal Fixes - Centered, no scroll on body */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; animation: fadeInUp 0.3s ease; }
-  .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 24px; overflow: hidden; position: relative; max-height: 90vh; overflow-y: auto; animation: scaleIn 0.3s ease; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-  .modal-image { height: 250px; background-size: cover; background-position: center; }
-  .modal-body { padding: 32px; }
-  .modal-body .price { font-size: 1.5rem; font-weight: 800; margin: 16px 0; }
-  .close-btn { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: white; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-  .btn-full { width: 100%; background: #0D1B0F; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 24px; font-size: 1rem; transition: background 0.2s; }
-  .btn-full:hover { background: #4CAF50; }
+  /* Drawer Overlay - Fixed Z-Index for Close Button */
+  .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .drawer-overlay.open { opacity: 1; pointer-events: all; }
+  
+  .drawer-content { 
+    position: fixed; top: 0; right: 0; width: 100%; max-width: 550px; height: 100%; background: var(--bg-secondary); 
+    z-index: 201; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+    border-left: 1px solid var(--border-color); display: flex; flex-direction: column;
+  }
+  .drawer-overlay.open .drawer-content { transform: translateX(0); }
 
   @media (max-width: 768px) {
     h1 { font-size: 2.5rem; }
     h2 { font-size: 2rem; }
-    .btn-primary { padding: 12px 24px; width: 100%; justify-content: center; }
   }
 `;
