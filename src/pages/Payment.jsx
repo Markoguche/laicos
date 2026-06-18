@@ -1,5 +1,4 @@
-// Payment.jsx
-import React from "react";
+ 
 
 export default function Payment({ navigate, product }) {
   const order = product || { name: "Product", price: "N/A" };
@@ -8,28 +7,33 @@ export default function Payment({ navigate, product }) {
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   return (
-    <main style={{paddingTop: '120px', paddingBottom: '80px', display: 'flex', justifyContent: 'center'}}>
-      <div style={{width: '100%', maxWidth: '500px', padding: '0 24px'}}>
-        <h2 style={{marginBottom: '8px'}}>Checkout</h2>
-        <p style={{color: 'var(--text-secondary)', marginBottom: '32px'}}>Complete your transaction.</p>
+    <main className="pt-32 pb-20 flex justify-center min-h-screen bg-white">
+      <div className="w-full max-w-md px-6">
+        <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Checkout</h2>
+        <p className="text-gray-500 mb-8">Complete your transaction.</p>
 
-        <div style={{background: 'var(--bg-surface)', padding: '32px', borderRadius: '20px', border: '1px solid var(--border-color)'}}>
-          <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '16px'}}>
-            <span style={{color: 'var(--text-secondary)'}}>Product</span>
-            <span style={{fontWeight: 600}}>{order.name}</span>
+        <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100 shadow-sm">
+          <div className="flex justify-between mb-4 border-b border-gray-200 pb-4">
+            <span className="text-gray-500">Product</span>
+            <span className="font-semibold text-gray-900">{order.name}</span>
           </div>
-          <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '24px'}}>
-            <span style={{color: 'var(--text-secondary)'}}>Total</span>
-            <span style={{fontSize: '1.4rem', fontWeight: 700, color: 'var(--accent-primary)'}}>{order.price}</span>
+          <div className="flex justify-between mb-6">
+            <span className="text-gray-500">Total</span>
+            <span className="text-2xl font-bold text-blue-600">{order.price}</span>
           </div>
 
-          <button className="btn-primary" style={{width: '100%', justifyContent: 'center', marginBottom: '16px'}}>
+          <button className="w-full bg-blue-600 text-white font-bold py-4 rounded-full hover:bg-blue-700 transition shadow-lg uppercase text-sm tracking-wider mb-4">
             Pay with Card
           </button>
 
-          <div style={{textAlign: 'center', margin: '16px 0', color: 'var(--text-secondary)', fontSize: '0.8rem'}}>OR</div>
+          <div className="text-center my-4 text-gray-400 text-xs">OR</div>
 
-          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', borderColor: '#25D366', color: '#25D366'}}>
+          <a 
+            href={whatsappLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="w-full flex items-center justify-center gap-2 bg-transparent text-green-600 border border-green-500 font-semibold py-4 rounded-full hover:bg-green-50 transition uppercase text-sm tracking-wider"
+          >
             Order via WhatsApp
           </a>
         </div>

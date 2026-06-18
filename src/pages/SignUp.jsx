@@ -1,49 +1,49 @@
-import React, { useState } from "react";
-import { Icon } from "../components/Icons";
+ 
+import   { useState } from "react";
 
 export default function SignUp({ navigate, product }) {
   const [form, setForm] = useState({ name: '', email: '', phone: '' });
-  if (!product) return (<main style={{paddingTop: '150px', textAlign: 'center'}}><h2>No product selected</h2><button className="btn-primary" style={{marginTop: '20px'}} onClick={() => navigate('marketplace')}>Back to Marketplace</button></main>);
+  
+  if (!product) return (
+    <main className="pt-32 text-center min-h-screen">
+      <h2 className="text-2xl font-bold">No product selected</h2>
+      <button className="mt-5 bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition uppercase text-sm tracking-wider" onClick={() => navigate('marketplace')}>Back to Marketplace</button>
+    </main>
+  );
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   return (
-    <main style={{paddingTop: '120px', paddingBottom: '80px', display: 'flex', justifyContent: 'center'}}>
-      <div style={{width: '100%', maxWidth: '500px', padding: '0 24px'}}>
-        
-        {/* Product Summary Card */}
-        <div style={{display: 'flex', gap: '20px', background: 'var(--bg-surface)', padding: '20px', borderRadius: '16px', marginBottom: '40px', border: '1px solid var(--border-color)'}}>
-          <div style={{width: '80px', height: '80px', borderRadius: '12px', backgroundImage: `url(${product.img})`, backgroundSize: 'cover', flexShrink: 0}} />
+    <main className="pt-32 pb-20 flex justify-center min-h-screen bg-white">
+      <div className="w-full max-w-md px-6">
+        <div className="flex gap-4 bg-gray-50 p-5 rounded-2xl mb-10 border border-gray-100">
+          <div className="w-20 h-20 rounded-xl bg-cover bg-center flex-shrink-0" style={{ backgroundImage: `url(${product.img})` }} />
           <div>
-            <span style={{color: 'var(--text-secondary)', fontSize: '0.8rem'}}>ORDERING</span>
-            <h4 style={{margin: '4px 0'}}>{product.name}</h4>
-            <span style={{color: 'var(--accent-primary)', fontWeight: 700}}>{product.price}</span>
+            <span className="text-gray-500 text-xs font-semibold tracking-wider">ORDERING</span>
+            <h4 className="text-lg font-bold my-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{product.name}</h4>
+            <span className="text-blue-600 font-bold">{product.price}</span>
           </div>
         </div>
 
-        <h2 style={{marginBottom: '8px'}}>Create Account</h2>
-        <p style={{color: 'var(--text-secondary)', marginBottom: '32px'}}>Sign up to secure your order.</p>
+        <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Create Account</h2>
+        <p className="text-gray-500 mb-8">Sign up to secure your order.</p>
 
-        <form onSubmit={() => navigate("payment")}>
-          <div className="form-group" style={{marginBottom: '20px'}}>
-            <label style={{display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>Full Name</label>
-            <input name="name" placeholder="Enter your name" value={form.name} onChange={handleChange} required style={inputStyle} />
+        <form onSubmit={(e) => { e.preventDefault(); navigate("payment"); }}>
+          <div className="mb-5">
+            <label className="block mb-2 text-sm text-gray-600">Full Name</label>
+            <input name="name" placeholder="Enter your name" value={form.name} onChange={handleChange} required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 outline-none focus:border-blue-500 transition" />
           </div>
-          <div className="form-group" style={{marginBottom: '20px'}}>
-            <label style={{display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>Email Address</label>
-            <input name="email" type="email" placeholder="you@example.com" value={form.email} onChange={handleChange} required style={inputStyle} />
+          <div className="mb-5">
+            <label className="block mb-2 text-sm text-gray-600">Email Address</label>
+            <input name="email" type="email" placeholder="you@example.com" value={form.email} onChange={handleChange} required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 outline-none focus:border-blue-500 transition" />
           </div>
-          <div className="form-group" style={{marginBottom: '32px'}}>
-            <label style={{display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>Phone Number</label>
-            <input name="phone" type="tel" placeholder="+234 ..." value={form.phone} onChange={handleChange} required style={inputStyle} />
+          <div className="mb-8">
+            <label className="block mb-2 text-sm text-gray-600">Phone Number</label>
+            <input name="phone" type="tel" placeholder="+234 ..." value={form.phone} onChange={handleChange} required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 outline-none focus:border-blue-500 transition" />
           </div>
-          <button type="submit" className="btn-primary" style={{width: '100%', justifyContent: 'center'}}>Continue to Payment</button>
+          <button type="submit" className="w-full bg-blue-600 text-white font-bold py-4 rounded-full hover:bg-blue-700 transition shadow-lg uppercase text-sm tracking-wider">Continue to Payment</button>
         </form>
       </div>
     </main>
   );
 }
-
-const inputStyle = {
-  width: '100%', padding: '16px', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '12px', color: '#fff', fontSize: '1rem', outline: 'none', transition: 'border-color 0.2s'
-};
