@@ -1,4 +1,5 @@
 import React from "react";
+import { PRODUCTS } from "../App";
 import { Icon } from "../components/Icons";
 
 const AvatarIcon = ({ color = "#6b7280" }) => (
@@ -8,31 +9,23 @@ const AvatarIcon = ({ color = "#6b7280" }) => (
 );
 
 export default function Home({ navigate }) {
-  // Hardcoded the hero images you wanted to keep
-  const homeProducts = [
-    { img: "https://cdn.britannica.com/36/167236-050-BF90337E/Ears-corn.jpg" },
-    { img: "https://i.pinimg.com/1200x/91/4c/05/914c05d452a85067f99e756005592091.jpg" },
-    { img: "https://i.pinimg.com/1200x/db/7c/ea/db7ceabc94a645947be78a4662afc870.jpg" },
-    { img: "https://i.pinimg.com/736x/87/d1/7d/87d17df88ef690e66234157f1cce8c61.jpg" }
-  ];
+  const homeProducts = PRODUCTS.slice(0, 4);
 
   return (
     <main className="pt-24">
-      {/* HERO */}
       <section className="min-h-[90vh] grid grid-cols-1 md:grid-cols-2 gap-20 items-center px-6 md:px-10 mb-24">
         <div data-aos="fade-right">
-          
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-none mb-6 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            The Trusted<br />Bridge for <span className="text-blue-600">Global Agric Trade</span>
+            The Future<br />of <span className="text-blue-600">Agriculture</span>
           </h1>
           <p className="max-w-md text-lg text-gray-500 mb-10">
-            We act as the escrow for high-volume agricultural transactions. We hold the funds until the goods are verified and delivered, removing the fear of foreigners and large cooperations buying from the Nigerian market.
+            A unified ecosystem connecting verified suppliers with institutional buyers. Transparent, efficient, and built for scale.
           </p>
           <div className="flex gap-4 flex-wrap">
             <button className="bg-blue-600 text-white font-bold py-4 px-8 rounded-full hover:bg-blue-700 transition shadow-lg uppercase text-sm tracking-wider flex items-center gap-2" onClick={() => navigate("marketplace")}>
               Explore Products <Icon name="arrowRight" style={{ width: 16, height: 16, stroke: '#fff' }} />
             </button>
-            <button className="bg-transparent text-gray-900 border border-gray-300 font-semibold py-4 px-8 rounded-full hover:bg-gray-50 transition uppercase text-sm tracking-wider" onClick={() => navigate("suppliers")}>How Verification Works</button>
+            <button className="bg-transparent text-gray-900 border border-gray-300 font-semibold py-4 px-8 rounded-full hover:bg-gray-50 transition uppercase text-sm tracking-wider">Learn More</button>
           </div>
         </div>
         
@@ -44,8 +37,40 @@ export default function Home({ navigate }) {
         </div>
       </section>
 
-      {/* CORE SERVICES */}
       <section className="max-w-7xl mx-auto px-6 mb-32">
+        <div className="flex justify-between items-end mb-10">
+          <div data-aos="fade-up">
+            <span className="text-blue-600 font-semibold text-xs tracking-widest">MARKETPLACE</span>
+            <h2 className="text-4xl md:text-5xl font-bold mt-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Trending Now.</h2>
+          </div>
+          <button className="bg-transparent text-gray-900 border border-gray-300 font-semibold py-3 px-6 rounded-full hover:bg-gray-50 transition uppercase text-sm tracking-wider" onClick={() => navigate("marketplace")}>View All</button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-5 h-auto md:h-[620px]">
+          {PRODUCTS.slice(0, 5).map((p, i) => (
+            <div 
+              key={p.id} 
+              data-aos="zoom-in"
+              data-aos-delay={i * 100}
+              className={`bg-white border border-gray-100 rounded-3xl overflow-hidden cursor-pointer hover:shadow-xl hover:-translate-y-2 transition group ${
+                i === 0 ? 'md:col-span-2 md:row-span-2' : ''
+              }`}
+              onClick={() => navigate("marketplace")}
+            >
+              <div className={`bg-cover bg-center transition-transform duration-500 group-hover:scale-105 ${i === 0 ? 'h-[450px] md:h-[500px]' : 'h-48'}`} style={{ backgroundImage: `url(${p.img})` }} />
+              <div className="p-6">
+                <div className="flex justify-between items-center">
+                  <h4 className="text-lg font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{p.name}</h4>
+                  <span className="text-[#DFFF00] font-bold bg-gray-900 px-2 py-1 rounded text-xs">{p.price}</span>
+                </div>
+                <div className="text-gray-500 text-sm mt-1">{p.location}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+     <section className="max-w-7xl mx-auto px-6 mb-32">
         <div data-aos="fade-up" className="text-center mb-16">
           <span className="text-blue-600 font-semibold text-xs tracking-widest">OUR INFRASTRUCTURE</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>More Than Just a Marketplace</h2>
