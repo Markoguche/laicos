@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css"; // Import AOS CSS
+import "aos/dist/aos.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -10,23 +10,25 @@ import SignUp from "./pages/SignUp";
 import Payment from "./pages/Payment";
 
 export const PRODUCTS = [
-  { id: 1, name: "Corn (Maize)", category: "Grains", price: "₦185,000", unit: "100kg Bag", location: "Kaduna", img: "https://cdn.britannica.com/36/167236-050-BF90337E/Ears-corn.jpg", desc: "Fresh high-yield variety, suitable for industrial processing." },
-  { id: 2, name: "Milled Rice", category: "Grains", price: "₦95,000", unit: "50kg Bag", location: "Kebbi", img: "https://i.pinimg.com/1200x/91/4c/05/914c05d452a85067f99e756005592091.jpg", desc: "Aromatic local rice variety, freshly harvested." },
-  { id: 3, name: "Fresh Cabbage", category: "Spices", price: "₦12,000", unit: "Crate", location: "Plateau", img: "https://i.pinimg.com/1200x/db/7c/ea/db7ceabc94a645947be78a4662afc870.jpg", desc: "Crunchy and fresh, farm-direct." },
-  { id: 4, name: "Carrots", category: "Spices", price: "₦18,000", unit: "50kg Bag", location: "Plateau", img: "https://i.pinimg.com/736x/87/d1/7d/87d17df88ef690e66234157f1cce8c61.jpg", desc: "Bright orange, rich in vitamins." },
-  { id: 5, name: "Irish Potato", category: "Tubers", price: "₦4,500", unit: "25kg Basket", location: "Plateau", img: "https://i.pinimg.com/736x/aa/46/6e/aa466e03eafad85e650142f4d1078637.jpg", desc: "Firm and fresh, ideal for chips and mash." },
-  { id: 6, name: "Red Onions", category: "Spices", price: "₦25,000", unit: "50kg Bag", location: "Kano", img: "https://i.pinimg.com/736x/80/50/c3/8050c322143dbb2ab94f3114c09420fb.jpg", desc: "Freshly harvested, pungent and flavorful." },
-  { id: 7, name: "Banana", category: "Cash Crops", price: "₦10,000", unit: "Bunch", location: "Ondo", img: "https://i.pinimg.com/736x/06/53/13/0653136ae829a2060f300544583141c4.jpg", desc: "Organic and ready for market." },
-  { id: 8, name: "Groundnut", category: "Oil Seeds", price: "₦150,000", unit: "100kg Bag", location: "Kano", img: "https://i.pinimg.com/736x/a5/db/b8/a5dbb80201c876e78a5e5a0478351114.jpg", desc: "Dried and ready for oil processing." },
-  { id: 9, name: "Chilli Pepper", category: "Spices", price: "₦30,000", unit: "Basket", location: "Kaduna", img: "https://i.pinimg.com/736x/72/04/9f/72049fd87df2326347e980f37259b320.jpg", desc: "Spicy grade, dried options available." },
-  { id: 10, name: "Yam Tubers", category: "Tubers", price: "₦3,500", unit: "Tuber", location: "Nasarawa", img: "https://i.pinimg.com/736x/b9/81/f2/b981f25cf1b24a364cb1d106509d4758.jpg", desc: "Large, healthy tubers, cured for longevity." },
-  { id: 11, name: "Cocoa Beans", category: "Cash Crops", price: "₦1,200,000", unit: "Metric Ton", location: "Ondo", img: "https://i.pinimg.com/736x/3a/68/c2/3a68c26f03215269d09abaecb7cce7d7.jpg", desc: "Premium fermentation quality." },
-  { id: 12, name: "Palm Produce", category: "Oil Seeds", price: "₦80,000", unit: "200L Drum", location: "Akwa Ibom", img: "https://i.pinimg.com/736x/fa/f2/15/faf215e8c45b8bb264646115fb7e6fe5.jpg", desc: "Pure unadulterated palm oil and kernels." },
-  { id: 13, name: "Sugarcane", category: "Cash Crops", price: "₦15,000", unit: "Ton", location: "Kwara", img: "https://i.pinimg.com/1200x/70/39/8c/70398cdbe7411ae86c704680c4414e78.jpg", desc: "High sugar content, freshly cut." },
-  // Added New Products
-  { id: 14, name: "Wheat", category: "Grains", price: "₦65,000", unit: "100kg Bag", location: "Kano", img: "https://i.pinimg.com/736x/3b/be/90/3bbe90572b71c634cea4a3ff56b2e06d.jpg", desc: "Premium milling wheat, high yield." },
-  { id: 15, name: "Plantain", category: "Cash Crops", price: "₦18,000", unit: "Bunch", location: "Cross River", img: "https://i.pinimg.com/736x/5c/9a/91/5c9a911d267017e573192741845b7c78.jpg", desc: "Freshly harvested, ripe and unripe available." },
-  { id: 16, name: "Cotton", category: "Cash Crops", price: "₦350,000", unit: "Metric Ton", location: "Zamfara", img: "https://i.pinimg.com/1200x/bd/e8/6b/bde86b2c208bdf3897b372430fbc5d55.jpg", desc: "High-grade raw cotton for textiles." }
+  { id: 1, name: "Cashew Nuts", category: "Cash Crops", quantity: "10,000 Tons Available", location: "Oyo", img: "https://i.pinimg.com/736x/3b/fd/65/3bfd65b75dc2bac793546a70c6bc9a1c.jpg", desc: "Premium grade cashew nuts ready for export. Fully verified and escrow-protected." },
+  { id: 2, name: "Palm Fruit & Oil", category: "Oil Seeds", quantity: "5,000 Metric Tons Available", location: "Akwa Ibom", img: "https://i.pinimg.com/1200x/7e/8c/f9/7e8cf96b27fd17cc25e0b9812bd14944.jpg", desc: "Fresh palm fruit and unadulterated red palm oil for large-scale industrial buyers." },
+  { id: 3, name: "Ginger", category: "Spices", quantity: "100,000 Truckloads Available", location: "Kaduna", img: "https://i.pinimg.com/736x/27/4f/6d/274f6d321dca4a3e53d94cc1bbb3c818.jpg", desc: "Highly pungent, sun-dried ginger. Perfect for international spice markets." },
+  { id: 4, name: "Cocoa Beans", category: "Cash Crops", quantity: "2,000 Bags Available", location: "Ondo", img: "https://i.pinimg.com/1200x/7e/e8/27/7ee82770c0e0c243fba0e28e9089ca33.jpg", desc: "Premium fermented cocoa beans, meeting all international export standards." },
+  { id: 5, name: "Bell Peppers", category: "Vegetables", quantity: "1,500 Crates Available", location: "Plateau", img: "https://i.pinimg.com/736x/d1/7f/94/d17f940c810fe72f464ff0d5e9f0da16.jpg", desc: "Freshly harvested, vibrant bell peppers suitable for commercial food processing." },
+  { id: 6, name: "Milled Rice", category: "Grains", quantity: "20,000 Bags Available", location: "Kebbi", img: "https://i.pinimg.com/1200x/f8/a1/6b/f8a16bf49f07b5d5735d1bb6be29c992.jpg", desc: "Aromatic, stone-free local rice. Fully sorted and bagged for wholesale." },
+  { id: 7, name: "Fresh Tomatoes", category: "Vegetables", quantity: "50,000 Crates Available", location: "Kano", img: "https://i.pinimg.com/1200x/95/4e/1c/954e1c32735565cc98fac1b1a0b8db1e.jpg", desc: "High-yield variety tomatoes, ideal for industrial paste production." },
+  { id: 8, name: "Plantain", category: "Cash Crops", quantity: "30,000 Bunches Available", location: "Cross River", img: "https://i.pinimg.com/736x/26/a9/2f/26a92facf46f3f9f5b132ce8df5d0cba.jpg", desc: "Mature, freshly harvested plantains available in ripe and unripe variants." },
+  { id: 9, name: "Mangoes", category: "Fruits", quantity: "40,000 Tons Available", location: "Benue", img: "https://i.pinimg.com/736x/c5/91/c1/c591c1832812580f5aeb028c4956287a.jpg", desc: "Sweet, export-grade mangoes. Perfect for concentrate and juice production." },
+  { id: 10, name: "Groundnut", category: "Oil Seeds", quantity: "15,000 Bags Available", location: "Kano", img: "https://i.pinimg.com/1200x/5c/15/94/5c1594a29369893cbc0c66de83e821ea.jpg", desc: "Dried, high-oil-content groundnuts, ready for industrial oil extraction." },
+  { id: 11, name: "Potatoes", category: "Tubers", quantity: "25,000 Tons Available", location: "Plateau", img: "https://i.pinimg.com/736x/3a/ea/a0/3aeaa02d2a55990fb7524e87d71f2c54.jpg", desc: "Firm, disease-free Irish potatoes suitable for commercial snack production." },
+  { id: 12, name: "Wheat", category: "Grains", quantity: "12,000 Bags Available", location: "Kano", img: "https://i.pinimg.com/736x/70/8d/4d/708d4dee56c06aa68468945cf65c1b43.jpg", desc: "Premium milling wheat, high yield, and protein content for industrial baking." },
+  { id: 13, name: "Sesame Seeds", category: "Oil Seeds", quantity: "8,000 Tons Available", location: "Jigawa", img: "https://i.pinimg.com/736x/ba/b0/7f/bab07fc34f5de38a5314ea9e2e6d2d9d.jpg", desc: "99.9% purity, un-hulled sesame seeds, perfectly suited for oil extraction." },
+  { id: 14, name: "Yam Tubers", category: "Tubers", quantity: "100,000 Tubers Available", location: "Nasarawa", img: "https://i.pinimg.com/736x/6e/5b/93/6e5b93320c702caaaaa86b934f69aea6.jpg", desc: "Large, cured yam tubers. Highly sought after for international diaspora markets." },
+  { id: 15, name: "Soybeans", category: "Legumes", quantity: "18,000 Bags Available", location: "Benue", img: "https://i.pinimg.com/736x/52/e2/ac/52e2ac70299ccde740d44679783c1800.jpg", desc: "Non-GMO, high-protein soybeans for animal feed and oil processing." },
+  { id: 16, name: "Coffee Beans", category: "Cash Crops", quantity: "6,000 Bags Available", location: "Taraba", img: "https://i.pinimg.com/1200x/e6/36/d9/e636d94135ff2b9b22c04edc53b4d848.jpg", desc: "Premium Arabica and Robusta coffee beans, expertly dried and sorted." },
+  { id: 17, name: "Cotton", category: "Cash Crops", quantity: "4,000 Metric Tons Available", location: "Zamfara", img: "https://i.pinimg.com/736x/6c/e9/5e/6ce95e453fe4c18672ae19c52846ec9f.jpg", desc: "High-grade raw cotton, ginned and ready for international textile manufacturing." },
+  { id: 18, name: "Dried Hibiscus", category: "Spices", quantity: "2,500 Tons Available", location: "Kano", img: "https://i.pinimg.com/1200x/84/c9/ad/84c9adaa719a2ed5cbc7a94118d9236d.jpg", desc: "Pharmaceutical-grade dried hibiscus flowers (Zobo), highly demanded in Europe." },
+  { id: 19, name: "Cassava Starch", category: "Tubers", quantity: "9,000 Tons Available", location: "Ondo", img: "https://i.pinimg.com/736x/4a/7c/f0/4a7cf09020439fdd3caa1cf7e8233200.jpg", desc: "Industrial grade cassava starch, extracted and dried for commercial use." }
 ];
 
 const useRouter = (initialPage = "home") => {
@@ -54,7 +56,6 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Initialize AOS
     AOS.init({
       duration: 800,
       once: true,

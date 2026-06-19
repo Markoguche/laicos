@@ -1,15 +1,15 @@
- 
+ import logo from "../assets/logo.png";
 
 export default function Navbar({ navigate, page, menuOpen, setMenuOpen }) {
   return (
     <nav className="fixed top-5 left-5 right-5 z-50 bg-white/80 backdrop-blur-md border border-gray-100 rounded-full shadow-sm">
       <div className="max-w-7xl mx-auto h-16 flex items-center px-6 relative">
         <button 
-          className="font-bold text-xl flex items-center gap-2 text-gray-900 z-10" 
+          className="font-bold text-xs flex items-center gap-2 text-gray-900 z-10" 
           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           onClick={() => navigate("home")}
         >
-          <span className="text-blue-600">◈</span> LAICOS
+          <img src={logo} className="w-14 h-10" alt="Laicos Logo" />
         </button>
         
         <div className="hidden md:flex ml-auto gap-8 items-center">

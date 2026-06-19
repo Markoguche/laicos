@@ -17,18 +17,17 @@ export default function Marketplace({ startOrder }) {
   ];
 
   const tickerItems = [
-    { icon: "wheat", label: "Maize", trend: "▲ 2.3%", color: "text-green-600" },
-    { icon: "nut", label: "Soybeans", trend: "▼ 1.1%", color: "text-red-500" },
-    { icon: "cocoa", label: "Cocoa", trend: "▲ 4.8%", color: "text-green-600" },
-    { icon: "pepper", label: "Ginger", trend: "▲ 0.9%", color: "text-green-600" },
-    { icon: "wheat", label: "Rice", trend: "▲ 1.7%", color: "text-green-600" },
+    { icon: "cocoa", label: "Cocoa (2k Bags)", trend: "Escrow Ready", color: "text-blue-600" },
+    { icon: "nut", label: "Cashew Nuts", trend: "Verified", color: "text-green-600" },
+    { icon: "wheat", label: "Rice (20k Bags)", trend: "Escrow Ready", color: "text-blue-600" },
+    { icon: "pepper", label: "Ginger (100k Trucks)", trend: "Export Ready", color: "text-green-600" },
   ];
 
   const stats = [
-    { value: "120+", label: "Active Listings" },
-    { value: "45+", label: "Verified Suppliers" },
-    { value: "₦2.4B", label: "Monthly Volume" },
-    { value: "36", label: "States Covered" },
+    { value: "$5M+", label: "Escrow Protected" },
+    { value: "100%", label: "Fund Security" },
+    { value: "45+", label: "Verified Cooperatives" },
+    { value: "0", label: "Fraudulent Trades" },
   ];
 
   const filteredProducts = useMemo(() => {
@@ -45,21 +44,19 @@ export default function Marketplace({ startOrder }) {
     <main className="bg-white text-gray-900 min-h-screen pb-20">
       <section className="pt-32 pb-24 px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          <span data-aos="fade-down" className="px-4 py-2 rounded-full border border-blue-100 bg-blue-50 text-sm font-medium text-blue-600 inline-block">
-            VERIFIED COMMODITY EXCHANGE
-          </span>
+          
           <h1 data-aos="fade-up" className="text-5xl md:text-7xl lg:text-8xl font-bold leading-none my-5 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            Trade Agricultural <span className="text-blue-600">Commodities</span><br /> With Confidence
+            Source Bulk <span className="text-blue-600">Cash Crops</span><br /> With Zero Risk
           </h1>
           <p data-aos="fade-up" data-aos-delay="100" className="max-w-2xl mx-auto text-gray-500 text-lg">
-            Discover verified suppliers, transparent pricing, and premium agricultural products across Nigeria.
+            We hold your money in escrow until the agricultural goods are verified and delivered. Trade cocoa, cashew, and palm oil with absolute confidence.
           </p>
           <div data-aos="fade-up" data-aos-delay="200" className="flex gap-4 justify-center mt-8 flex-wrap">
             <button className="bg-[#DFFF00] text-gray-900 font-bold py-3 px-8 rounded-full hover:bg-[#C7E600] transition shadow-lg uppercase text-sm tracking-wider">
               Browse Market
             </button>
             <button className="bg-transparent text-gray-900 border border-gray-300 font-semibold py-3 px-8 rounded-full hover:bg-gray-50 transition uppercase text-sm tracking-wider">
-              Become Supplier
+              Verification Services
             </button>
           </div>
         </div>
@@ -100,7 +97,7 @@ export default function Marketplace({ startOrder }) {
               <div className="h-full flex flex-col justify-end p-8 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
                 <span className="text-[#DFFF00] text-sm font-semibold uppercase tracking-wider">{item.category}</span>
                 <h3 className="text-3xl font-bold text-white mt-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.name}</h3>
-                <strong className="text-xl text-white block mt-2">{item.price}</strong>
+                <strong className="text-xl text-white block mt-2">{item.quantity}</strong>
               </div>
             </div>
           ))}
@@ -131,14 +128,13 @@ export default function Marketplace({ startOrder }) {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search commodities..."
+            placeholder="Search bulk commodities..."
             className="bg-transparent border-none outline-none w-full text-gray-800 placeholder-gray-400"
           />
         </div>
       </section>
 
       <section className="max-w-7xl mx-auto px-6 py-16">
-        {/* Updated Mobile Grid to 2 Columns */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {filteredProducts.map((product, i) => (
             <div
@@ -155,7 +151,8 @@ export default function Marketplace({ startOrder }) {
               <div className="p-3 md:p-6">
                 <span className="text-blue-600 text-xs md:text-sm font-semibold">{product.category}</span>
                 <h3 className="text-base md:text-xl font-bold text-gray-900 mt-1 md:mt-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{product.name}</h3>
-                <strong className="text-sm md:text-lg text-gray-700 block mt-1 md:mt-2">{product.price}</strong>
+                {/* Replaced Price with Quantity Available */}
+                <strong className="text-sm md:text-lg text-gray-700 block mt-1 md:mt-2">{product.quantity}</strong>
               </div>
             </div>
           ))}
@@ -178,17 +175,23 @@ export default function Marketplace({ startOrder }) {
             <div className="p-6">
               <span className="text-blue-600 text-sm font-semibold">{selected.category}</span>
               <h2 className="text-3xl font-bold text-gray-900 mt-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{selected.name}</h2>
-              <div className="my-4 text-3xl font-bold text-blue-600">{selected.price}</div>
+              <div className="my-4 text-2xl font-bold text-blue-600">{selected.quantity}</div>
               <p className="text-gray-500">{selected.desc}</p>
               <div className="flex items-center gap-2 mt-4 text-gray-500">
                 <Icon name="mapPin" style={{ width: 16, height: 16 }} />
                 <span>{selected.location}</span>
               </div>
+              
+              <div className="mt-6 bg-blue-50 border border-blue-100 rounded-2xl p-4 flex items-center gap-3">
+                <Icon name="lock" style={{ width: 20, height: 20, stroke: '#2563EB' }} />
+                <p className="text-sm text-blue-700 font-medium">Funds held safely in Escrow until delivery is confirmed.</p>
+              </div>
+
               <button
                 className="w-full mt-6 bg-[#DFFF00] text-gray-900 font-bold py-3 rounded-full hover:bg-[#C7E600] transition shadow-lg uppercase text-sm tracking-wider"
                 onClick={() => startOrder(selected)}
               >
-                Initiate Order
+                Start Secure Escrow Order
               </button>
             </div>
           </div>

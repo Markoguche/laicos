@@ -1,4 +1,4 @@
- 
+import React from 'react';
 
 export const Icon = ({ name, style }) => {
   const icons = {
@@ -15,12 +15,16 @@ export const Icon = ({ name, style }) => {
     users: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
     globe: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>,
     user: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>,
-    // Agricultural Icons Added
     wheat: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 22 16 8"></path><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"></path><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"></path><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"></path></svg>,
     root: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 22h20"></path><path d="M10 2v7a4 4 0 0 1-4 4H4"></path><path d="M14 2v7a4 4 0 0 0 4 4h2"></path><path d="M10 9c0 4 0 13 2 13"></path><path d="M14 9c0 4 0 13-2 13"></path></svg>,
     pepper: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16.4 12.7-.5-.5c-1-1.2-2-2.8-1.8-4.6.1-1 .6-2 .8-3 .3-1.2.3-2.4-.3-3.3-.3-.5-1-.7-1.7-.4-.5.2-1.4.7-1.6 2.5-.1 1 .3 1.7.2 2.3-.3 1.5-2.1 2.6-2.6 3.7-.4 1.1-.3 2.3.1 3.4.1.3.2.7.2 1 0 .5-.2.9-.6 1.3-1.1 1.1-3.1.7-3.8 2.1-.4.8 0 1.6.5 2.1.3.3.6.5.9.5 1.4 0 2.2-1 3-2.1.4-.5.7-1 1.1-1.4.6-.6 1.4-1 2.3-1 .6 0 1.2.1 1.8.1 1.1 0 2.1.2 3-.5 1-.7 1.2-2.1.5-3.1.1.1 0 .2 0 .3Z"></path></svg>,
     cocoa: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h20"></path><path d="M2 12c0-5.5 4.5-10 10-10s10 4.5 10 10"></path><path d="M2 12c0 5.5 4.5 10 10 10s10-4.5 10-10"></path><circle cx="9" cy="15" r="1"></circle><circle cx="15" cy="15" r="1"></circle><circle cx="12" cy="18" r="1"></circle></svg>,
     nut: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2C8.1 6.4 6 9.6 6 13a6 6 0 0 0 12 0c0-3.4-2.1-6.6-6-11Z"></path><path d="M12 2v20"></path></svg>,
+    // New Icons for Escrow Services
+    lock: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>,
+    fileCheck: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>,
+    video: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>,
+    scale: <svg style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"></path><path d="M2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>,
   };
   return icons[name] || null;
 };
