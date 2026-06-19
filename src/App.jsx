@@ -3,6 +3,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ChatBox from "./components/ChatBox"; // Import ChatBox
 import Home from "./pages/Home";
 import Marketplace from "./pages/Marketplace";
 import Suppliers from "./pages/Suppliers";
@@ -100,6 +101,7 @@ export default function App() {
       </div>
       
       <Footer navigate={navigate} />
+      <ChatBox /> {/* Added Global ChatBox */}
     </div>
   );
 }

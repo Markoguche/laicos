@@ -46,8 +46,9 @@ export default function Home({ navigate }) {
           <button className="bg-transparent text-gray-900 border border-gray-300 font-semibold py-3 px-6 rounded-full hover:bg-gray-50 transition uppercase text-sm tracking-wider" onClick={() => navigate("marketplace")}>View All</button>
         </div>
 
+        {/* Changed slice to (5, 10) to avoid overlap with Hero images */}
         <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-5 h-auto md:h-[620px]">
-          {PRODUCTS.slice(0, 5).map((p, i) => (
+          {PRODUCTS.slice(5, 10).map((p, i) => (
             <div 
               key={p.id} 
               data-aos="zoom-in"
@@ -61,7 +62,7 @@ export default function Home({ navigate }) {
               <div className="p-6">
                 <div className="flex justify-between items-center">
                   <h4 className="text-lg font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{p.name}</h4>
-                  <span className="text-[#DFFF00] font-bold bg-gray-900 px-2 py-1 rounded text-xs">{p.price}</span>
+                  <span className="text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded text-xs">Escrow Ready</span>
                 </div>
                 <div className="text-gray-500 text-sm mt-1">{p.location}</div>
               </div>
@@ -70,7 +71,7 @@ export default function Home({ navigate }) {
         </div>
       </section>
 
-     <section className="max-w-7xl mx-auto px-6 mb-32">
+      <section className="max-w-7xl mx-auto px-6 mb-32">
         <div data-aos="fade-up" className="text-center mb-16">
           <span className="text-blue-600 font-semibold text-xs tracking-widest">OUR INFRASTRUCTURE</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>More Than Just a Marketplace</h2>
